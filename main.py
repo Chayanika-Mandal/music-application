@@ -1,7 +1,11 @@
+import pprint
 from datetime import datetime
 
 from sqlalchemy import Column, Date, Integer, String, create_engine
+from sqlalchemy.orm import Session as SessionType
 from sqlalchemy.orm import declarative_base, sessionmaker
+
+print = pprint.pprint
 
 engine = create_engine("sqlite:///:memory:", echo=True)
 
@@ -19,19 +23,23 @@ class User(Base):
     last_login = Column(Date)
 
     def __repr__(self):
-        return f"<User(pk='{self.pk}', username='{self.username}')>"
+        return (
+            f"<User{{pk='{self.pk}', "
+            f"username='{self.username}', "
+            f"date_of_joining='{self.date_of_joining}'}}>"
+        )
 
 
 Base.metadata.create_all(engine)
 now = datetime.now()
 
-session = Session()
+session: SessionType = Session()
 john = User(username="john", password="password1234", date_of_joining=now)
 session.add(john)
 session.commit()
 print(session.query(User).all())
 
-session = Session()
+session: SessionType = Session()
 mary = User(
     username="mary", password="password1234", date_of_joining=now, last_login=now
 )
