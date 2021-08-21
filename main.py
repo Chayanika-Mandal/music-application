@@ -16,7 +16,7 @@ Session = sessionmaker(bind=engine)
 class User(Base):
     __tablename__ = "users"
 
-    pk = Column(Integer, primary_key=True)
+    user_id = Column(Integer, primary_key=True)
     username = Column(String(50), nullable=False, unique=True)
     password = Column(String(25), nullable=False)
     date_of_joining = Column(Date, nullable=False)
@@ -24,7 +24,7 @@ class User(Base):
 
     def __repr__(self):
         return (
-            f"<User{{pk='{self.pk}', "
+            f"<User{{pk='{self.user_id}', "
             f"username='{self.username}', "
             f"date_of_joining='{self.date_of_joining}'}}>"
         )
