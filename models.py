@@ -1,8 +1,5 @@
-import pprint
-from datetime import datetime
-
-from sqlalchemy import Column, Date, Integer, String, create_engine, ForeignKey, UniqueConstraint
-from sqlalchemy.orm import declarative_base, sessionmaker, relationship, backref
+from sqlalchemy import Column, Date, ForeignKey, Integer, String, UniqueConstraint
+from sqlalchemy.orm import backref, declarative_base, relationship
 
 Base = declarative_base()
 
@@ -32,10 +29,7 @@ class Artist(Base):
     song = relationship("Song", backref=backref("artist"))
 
     def __repr__(self):
-        return (
-            f"<Artist{{artist_id='{self.artist_id}', "
-            f"name='{self.name}'}}>"
-        )
+        return f"<Artist{{artist_id='{self.artist_id}', " f"name='{self.name}'}}>"
 
 
 class Song(Base):
@@ -47,16 +41,14 @@ class Song(Base):
     url = Column(String(200))
 
     def __repr__(self):
-        return (
-            f"<User{{song_id='{self.song_id}', "
-            f"name='{self.name}'}}>"
-        )
+        return f"<User{{song_id='{self.song_id}', " f"name='{self.name}'}}>"
 
 
 class SongLike(Base):
     __tablename__ = "song_like"
-    __table_args__ = (UniqueConstraint(
-        "song_id", "user_id", name="song_user_uniqueconstraint"),)
+    __table_args__ = (
+        UniqueConstraint("song_id", "user_id", name="song_user_uniqueconstraint"),
+    )
     song_like_id = Column(Integer, primary_key=True)
     song_id = Column(Integer, ForeignKey("song.song_id"))
     user_id = Column(Integer, ForeignKey("user.user_id"))

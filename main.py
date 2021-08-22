@@ -1,9 +1,7 @@
 import pprint
-from datetime import datetime
 
-from sqlalchemy import Column, Date, Integer, String, create_engine
-from sqlalchemy.orm import Session as SessionType
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy import create_engine
+
 from models import Base
 
 print = pprint.pprint
