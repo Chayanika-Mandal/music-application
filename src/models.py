@@ -9,7 +9,7 @@ class User(Base):
 
     user_id = Column(Integer, primary_key=True)
     username = Column(String(50), nullable=False, unique=True)
-    password = Column(String(25), nullable=False)
+    hashed_password = Column(String(128), nullable=False)
     date_of_joining = Column(Date, nullable=False)
     last_login = Column(Date)
 
